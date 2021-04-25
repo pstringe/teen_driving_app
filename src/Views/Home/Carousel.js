@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import {Link as RouterLink} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
@@ -56,11 +57,13 @@ function Carousel(props) {
                 {feature.title}
                 </Typography>
                 <Typography variant="h5" color="inherit" paragraph>
-                {feature.description}
+                {feature.summary}
                 </Typography>
-                <Link variant="subtitle1" href="#">
-                {feature.linkText}
-                </Link>
+                <RouterLink to={feature.path}>
+                    <Link variant="subtitle1" href="#">
+                        {feature.linkText}
+                    </Link>
+                </RouterLink>  
             </div>
             </Grid>
         </Grid>

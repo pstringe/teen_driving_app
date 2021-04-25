@@ -3,10 +3,11 @@ import {
     Typography,
 } from '@material-ui/core';
 
-const Section = () => {
+const Section = ({section}) => {
     return ( 
-        <Grid>
-
+        <Grid container>
+            <Typography variant='h5'>{section.title}</Typography>
+            <Typography variant='body1'>{section.longSummary}</Typography>
         </Grid>
     );
 }
