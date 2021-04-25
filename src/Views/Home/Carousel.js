@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -40,6 +40,19 @@ function Carousel(props) {
     const {features} = props;
     const [current, setCurrent] = useState(0); 
     const classes = useStyles();
+    const [seconds, setSeconds] = useState(0);
+
+   useEffect(() => {
+      function tick() {
+        if (!(seconds % 10)) {
+            setCurrent(current => current < features.length - 1 ? current + 1 : 0);
+        }
+        setSeconds((prev) => prev + 1);
+    }
+    const timer = setTimeout(tick, 1000);
+    return () => clearTimeout(timer);
+    }, [seconds]);
+
     /*
     ** TODO: Convert to timer
     */
