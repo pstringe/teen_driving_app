@@ -5,6 +5,7 @@ import {
     Typography, 
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
+import Selection from './Selection';
 
 const useStyles = makeStyles({
     root: {
@@ -12,15 +13,13 @@ const useStyles = makeStyles({
     },
 });
 
-const Question = (props) => {
+const Question = ({question, current, onSelect}) => {
     const classes = useStyles();
-    const {prompt, choices, answer} = props.question;
+    const {prompt, choices, answer} = question;
     return ( 
         <Box className={classes.root}>
             <Typography variant='h5'>{prompt}</Typography>
-            <form>
-
-            </form>
+            <Selection question={question} current={current} onSelect={onSelect}/>
         </Box> 
     );
 }
