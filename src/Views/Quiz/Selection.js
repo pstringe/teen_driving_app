@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,7 +7,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { Typography, Grid } from '@material-ui/core';
 
 const Selection = ({choices}) => {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(null);
+    
+    useEffect(() => {
+        setValue(null);
+    }, [choices])
+
     const handleChange = (event) => {
         setValue(event.target.value);
     };
