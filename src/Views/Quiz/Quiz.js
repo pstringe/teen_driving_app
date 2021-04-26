@@ -5,7 +5,9 @@ import {
     Box, 
     Button, 
     Typography, 
-    Paper
+    Paper,
+    Dialog,
+    DialogTitle,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Question from './Question';
@@ -59,13 +61,25 @@ const Intro = () => {
     )
 }
 
-const QuizControls = ({complete, prev, next}) => {
+const QuizControls = ({complete,  show, check, close, prev, next}) => {
     const classes = useStyles();
+
+    const openDialog = () => {
+        check();
+    }
+    console.log('show',show);
 
     return (
         <Grid item container direction='row' justify='space-between' >
             <Button variant='contained' onClick={prev}>Previous</Button>
-            {complete && <Button variant='contained'>Check My Answers!</Button>}
+            {complete && <Button variant='contained' onClick={openDialog} color='primary'>Check My Answers!</Button>}
+                {show && (
+                    <Dialog open={show}>
+                        <DialogTitle>Your Results</DialogTitle>
+                        <Typography variant='h1' component='p'>{show.correct} / {show.total}</Typography>
+                        <Button variant='contained' onClick={close}>Return To Questions</Button>
+                    </Dialog>
+                )}       
             <Button variant='contained' onClick={next}>Next</Button>
         </Grid>
     );
@@ -77,6 +91,7 @@ const Quiz = () => {
     const [started, setStarted] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [current, setCurrent] = useState(0);
+    const [results, setResults] = useState(null);
 
     useEffect(()=>{
         setCompleted(current => questions.filter((question) => {
@@ -92,6 +107,19 @@ const Quiz = () => {
         setCurrent(current => Math.max(current - 1, 0));
     ;}
 
+    const check = () => {
+        const correct = questions.filter((question) => {
+            console.log('compare', question.selection, question.choices[question.answer])
+            return (question.selection == question.choices[question.answer]);
+        }).length;
+        setResults(cur => ({correct: correct, total: questions.length}));
+        console.log(results);
+    }
+
+    const close = () => {
+        setResults(cur => null);
+    }
+
     const userSelection = (choice, current) => {
         console.log(current);
         setQuestions (cur => {
@@ -102,6 +130,7 @@ const Quiz = () => {
         console.log('questions', questions);
     };
 
+    console.log(results)
     return ( 
         <Container className={classes.root}>
             <Paper className={classes.content}>
@@ -109,9 +138,10 @@ const Quiz = () => {
                     <Grid item>
                         {!started && <Intro/>}
                         {started && (<Question question={questions[current]} current={current} onSelect={userSelection}/>)}
+                        {results && <Dialog/>}
                     </Grid>
                     <Grid item container justify='center' >
-                        {!started ? <Button onClick={() => setStarted(true)} variant='contained' >Get started!</Button> : <QuizControls complete={completed} next={next} prev={prev}/>}
+                        {!started ? <Button onClick={() => setStarted(true)} variant='contained' >Get started!</Button> : <QuizControls show={results} complete={completed} close={close} check={check} next={next} prev={prev}/>}
                     </Grid>
                 </Grid>
             </Paper>
