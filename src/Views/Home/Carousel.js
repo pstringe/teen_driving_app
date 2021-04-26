@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 function Carousel(props) {
     const {features} = props;
     const [current, setCurrent] = useState(0); 
-    const classes = useStyles();
     const [seconds, setSeconds] = useState(0);
+    const classes = useStyles();
 
    useEffect(() => {
       function tick() {
@@ -53,9 +53,6 @@ function Carousel(props) {
     return () => clearTimeout(timer);
     }, [seconds]);
 
-    /*
-    ** TODO: Convert to timer
-    */
     const feature = features[current];
 
     return (
