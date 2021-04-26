@@ -48,7 +48,7 @@ const routes = [
   {name: 'facts', path: '/facts', component: <Facts />, auth: false, show:true},
   {name: 'stories', path: '/stories', component: <Stories />, auth: false, show:true},
   {name: 'take the pledge', path: '/take-the-pledge', component: <Quiz />, auth: false, show:true},
-  {name: 'pledge', path: '/pledge-form', component: <Pledge />, auth: false, show:false},
+  {name: 'pledge', path: '/pledge-form', component: <Quiz />, auth: false, show:false},
 ];
 
 function App() {
