@@ -2,6 +2,7 @@ import { createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styl
 
 import {
   Container,
+  Box,
 } from '@material-ui/core';
 
 import {
@@ -56,7 +57,7 @@ function App() {
   return (
     <ThemeProvider theme={theme} >
       <CssBaseline />
-      <Container  className={`App ${classes.root}`} maxWidth='xl' >
+      <Box  className={`App ${classes.root}`} maxWidth='xl' >
         <Router>
           <Header className={classes.header} title='DriveSafe' items={routes}/>
           <Container>
@@ -68,7 +69,7 @@ function App() {
             </Switch>
           </Container>
         </Router>
-      </Container>
+      </Box>
     </ThemeProvider>
   );
 }
