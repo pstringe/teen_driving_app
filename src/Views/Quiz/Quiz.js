@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {
     Grid,
     Container,
@@ -59,12 +59,13 @@ const Intro = () => {
     )
 }
 
-const QuizControls = ({prev, next}) => {
+const QuizControls = ({complete, prev, next}) => {
     const classes = useStyles();
 
     return (
         <Grid item container direction='row' justify='space-between' >
             <Button variant='contained' onClick={prev}>Previous</Button>
+            {complete && <Button variant='contained'>Check My Answers!</Button>}
             <Button variant='contained' onClick={next}>Next</Button>
         </Grid>
     );
@@ -74,7 +75,14 @@ const Quiz = () => {
     const classes = useStyles();
     const [questions, setQuestions] = useState(questionData);
     const [started, setStarted] = useState(false);
+    const [completed, setCompleted] = useState(false);
     const [current, setCurrent] = useState(0);
+
+    useEffect(()=>{
+        setCompleted(current => questions.filter((question) => {
+            return !question?.selection;
+        }).length == 0);
+    }, [questions]);
 
     const next = () => {
         setCurrent(current => Math.min(current + 1, questions.length - 1));
@@ -103,7 +111,7 @@ const Quiz = () => {
                         {started && (<Question question={questions[current]} current={current} onSelect={userSelection}/>)}
                     </Grid>
                     <Grid item container justify='center' >
-                        {!started ? <Button onClick={() => setStarted(true)} variant='contained' >Get started!</Button> : <QuizControls next={next} prev={prev}/>}
+                        {!started ? <Button onClick={() => setStarted(true)} variant='contained' >Get started!</Button> : <QuizControls complete={completed} next={next} prev={prev}/>}
                     </Grid>
                 </Grid>
             </Paper>
