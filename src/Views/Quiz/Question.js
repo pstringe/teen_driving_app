@@ -19,7 +19,7 @@ const Question = ({question, current, onSelect}) => {
     return ( 
         <Box className={classes.root}>
             <Typography variant='h5'>{prompt}</Typography>
-            <Selection choices={choices} current={current} onSelect={onSelect}/>
+            <Selection question={question} current={current} onSelect={onSelect}/>
         </Box> 
     );
 }
