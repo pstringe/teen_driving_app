@@ -37,12 +37,12 @@ const questionData = [
     {
         prompt: 'Question 2',
         choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
-        answer: 0
+        answer: 3
     },
     {
         prompt: 'Question 3',
         choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
-        answer: 0
+        answer: 2
     },
 ];
 
@@ -77,14 +77,22 @@ const Quiz = () => {
     const [current, setCurrent] = useState(0);
 
     const next = () => {
-        console.log(current);
         setCurrent(current => Math.min(current + 1, questions.length - 1));
-    }
+    };
 
     const prev = () => {
-        console.log(current);
         setCurrent(current => Math.max(current - 1, 0));
-    }
+    ;}
+
+    const userSelection = (choice, current) => {
+        console.log(current);
+        setQuestions (cur => {
+            let newQuestions = questions.slice();
+            newQuestions[current]['selection'] = choice;
+            return newQuestions;
+        });
+        console.log('questions', questions);
+    };
 
     return ( 
         <Container className={classes.root}>
@@ -92,7 +100,7 @@ const Quiz = () => {
                 <Grid className={classes.grid} container direction='column' justify='space-between'>
                     <Grid item>
                         {!started && <Intro/>}
-                        {started && (<Question question={questions[current]} />)}
+                        {started && (<Question question={questions[current]} current={current} onSelect={userSelection}/>)}
                     </Grid>
                     <Grid item container justify='center' >
                         {!started ? <Button onClick={() => setStarted(true)} variant='contained' >Get started!</Button> : <QuizControls next={next} prev={prev}/>}

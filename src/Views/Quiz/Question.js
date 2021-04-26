@@ -13,13 +13,13 @@ const useStyles = makeStyles({
     },
 });
 
-const Question = (props) => {
+const Question = ({question, current, onSelect}) => {
     const classes = useStyles();
-    const {prompt, choices, answer} = props.question;
+    const {prompt, choices, answer} = question;
     return ( 
         <Box className={classes.root}>
             <Typography variant='h5'>{prompt}</Typography>
-            <Selection choices={choices} />
+            <Selection choices={choices} current={current} onSelect={onSelect}/>
         </Box> 
     );
 }

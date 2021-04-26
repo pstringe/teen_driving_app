@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Typography, Grid } from '@material-ui/core';
 
-const Selection = ({choices}) => {
+const Selection = ({choices, onSelect, current}) => {
     const [value, setValue] = useState(null);
     
     useEffect(() => {
@@ -15,6 +15,7 @@ const Selection = ({choices}) => {
 
     const handleChange = (event) => {
         setValue(event.target.value);
+        onSelect(event.target.value, current);
     };
 
     const mapping = {0: 'A', 1: 'B', 2 : 'C', 3: 'D'};
